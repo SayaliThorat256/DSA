@@ -1,0 +1,50 @@
+class Solution {
+    
+         public void getSubsets(int pos, int[] candidates, int target, List<List<Integer>> powerSet, List<Integer> subset, int sum) {
+        
+        //int sum = subset.stream().reduce(0, Integer::sum);
+      //  int sum = Sumation(subset);
+        if(sum == target) {
+           // if(powerSet.contains(subset)) return;
+            
+            /*for(List<Integer> s : powerSet) {
+                if(s.equals(subset)) {
+                    return;
+                }
+            }*/
+            powerSet.add(new ArrayList<>(subset));
+            return;
+        }
+        
+        if(sum > target || pos == candidates.length) {
+            return;
+        }
+        
+       /*if(pos == candidates.length) {
+            return;
+        } */
+        
+        subset.add(candidates[pos]);
+         sum += candidates[pos];
+        getSubsets(pos + 1, candidates, target, powerSet, subset, sum);
+        subset.remove(subset.size() - 1);
+         sum -= candidates[pos];
+       while(pos < candidates.length - 1 && candidates[pos] == candidates[pos + 1]) {
+           pos++;
+       }
+        getSubsets(pos + 1, candidates, target, powerSet, subset, sum);
+        
+        
+    }
+    
+  
+
+    
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> powerSet = new ArrayList<>();
+        List<Integer> subset = new ArrayList<>();
+        getSubsets(0, candidates, target, powerSet, subset, 0);
+        return powerSet;
+    }
+}
