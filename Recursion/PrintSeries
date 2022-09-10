@@ -1,0 +1,42 @@
+//Print Series
+// sol -1 
+import java.util.*;
+public class Solution {
+    
+    
+    public static void addNumbers(int number, int n, boolean flag, List<Integer> nums, int k) {
+        if(!flag && number == k) {
+            nums.add(number);
+            return;
+        }
+          if(flag) {
+            nums.add(number);
+              if(number <= 0) {
+                  flag = false;
+                  addNumbers(number + n, n, flag, nums, k);
+              } else {
+                   addNumbers(number - n, n, flag, nums, k);
+              }
+             
+          } else {
+              nums.add(number);
+              addNumbers(number + n, n, flag, nums, k);
+          }
+        
+        
+    }
+    
+    
+    
+    public static List<Integer> printSeries(int n, int k) {
+        // Write your code here
+        List<Integer>  result = new ArrayList<Integer>();
+         addNumbers(n, k, true, result, n);
+         return result;
+    }
+}
+
+
+
+
+
