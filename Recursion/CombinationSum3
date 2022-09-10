@@ -1,0 +1,36 @@
+class Solution {
+    
+        public void getSubsets(int pos, int n, int target, List<List<Integer>> powerSet, List<Integer> subset, int sum, int k) {
+        
+        if(sum == target && subset.size() == k) {
+            powerSet.add(new ArrayList<>(subset));
+            return;
+        }
+        
+        if(sum > target || pos > n || subset.size() == k) {
+            return;
+        }
+        
+        
+        subset.add(pos);
+         sum += pos;
+        getSubsets(pos + 1, n, target, powerSet, subset, sum, k);
+        subset.remove(subset.size() - 1);
+         sum -= pos;
+        getSubsets(pos + 1, n, target, powerSet, subset, sum, k);
+        
+        
+    }
+    
+    
+    
+    
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        
+        List<List<Integer>> powerSet = new ArrayList<>();
+        List<Integer> subset = new ArrayList<>();
+        getSubsets(1, 9, n, powerSet, subset, 0, k);
+        return powerSet;
+        
+    }
+}
