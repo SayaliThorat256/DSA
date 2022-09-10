@@ -1,0 +1,73 @@
+
+
+class Solution {
+    
+     public void getSubsets(int pos, int[] candidates, int target, List<List<Integer>> powerSet, List<Integer> subset, int sum) {
+        
+        //int sum = subset.stream().reduce(0, Integer::sum);
+      //  int sum = Sumation(subset);
+        if(sum == target) {
+            powerSet.add(new ArrayList<>(subset));
+            return;
+        }
+        
+        if(sum > target || pos == candidates.length) {
+            return;
+        }
+        
+       /*if(pos == candidates.length) {
+            return;
+        } */
+        
+        subset.add(candidates[pos]);
+         sum += candidates[pos];
+        getSubsets(pos, candidates, target, powerSet, subset, sum);
+        subset.remove(subset.size() - 1);
+         sum -= candidates[pos];
+        getSubsets(pos + 1, candidates, target, powerSet, subset, sum);
+        
+        
+    }
+    
+    public int Sumation(List<Integer> subset) {
+        int sum = 0;
+        for(int num : subset) {
+            sum = sum + num;
+        }
+        return sum;
+    }
+    /*
+    public void getSubsets(int pos, int[] candidates, int target, List<List<Integer>> powerSet, List<Integer> subset) {
+        
+        //int sum = subset.stream().reduce(0, Integer::sum);
+        int sum = Sumation(subset);
+        if(sum == target) {
+            powerSet.add(new ArrayList<>(subset));
+            return;
+        }
+        
+        if(sum > target) {
+            return;
+        }
+        
+        if(pos == candidates.length) {
+            return;
+        } 
+        
+        subset.add(candidates[pos]);
+        getSubsets(pos, candidates, target, powerSet, subset);
+        subset.remove(subset.size() - 1);
+        getSubsets(pos + 1, candidates, target, powerSet, subset);
+        
+        
+    }
+    
+    
+    */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> powerSet = new ArrayList<>();
+        List<Integer> subset = new ArrayList<>();
+        getSubsets(0, candidates, target, powerSet, subset, 0);
+        return powerSet;
+    }
+}
