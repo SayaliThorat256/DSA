@@ -1,0 +1,26 @@
+import java.util.*;
+
+
+
+public class Solution{
+    public static void recursion2(long temp, long n, ArrayList<Long> ans) {
+    if(temp > n) {
+        return;
+    } 
+    
+    if(temp != 0) {
+        ans.add(temp);
+    }
+    recursion2((temp * 10) + 2, n, ans);
+    recursion2((temp * 10) + 5, n, ans);
+}
+
+    public static ArrayList<Long> createSequence(long n) {
+        // Write your code here.
+        ArrayList<Long> ans = new ArrayList<>();
+        recursion2(0, n, ans);
+        Collections.sort(ans);
+        return ans;
+        
+    }
+}
