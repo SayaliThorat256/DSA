@@ -1,0 +1,60 @@
+//approach 1
+----------------------------------------------------------------------------------
+class Solution {
+    
+    public void getConcatString(int pos, List<String> arr, String str, List<String> powerSet) {
+        
+        if(pos == arr.size()) {
+            powerSet.add(str);
+            return;
+        }
+        boolean flag = true;
+        String s = arr.get(pos);
+        for(int i = 0; i < s.length(); i++) {
+            if(str.contains(s.substring(i,i + 1))) {
+                flag = false;
+                break;
+            }
+        }
+        
+        if(flag) {
+            getConcatString(pos + 1, arr, str + s, powerSet);
+        }
+        
+         getConcatString(pos + 1, arr, str, powerSet);
+        
+    }
+    
+      
+    
+    
+    public int maxLength(List<String> arr) {
+        List<String> powerSet = new ArrayList<>();
+        for(int i = 0; i < arr.size(); i++) {
+            String str = arr.get(i);
+            int checker = 0;
+            for(int ch = 0; ch < str.length(); ch++) {
+                
+                int val = str.charAt(ch) - 'a';
+                
+                if((checker & (1 << val)) > 0) {
+                    arr.remove(i);
+                    
+                    i = i - 1;
+                    break;
+                }
+                checker |= (1<<val);
+            }
+        }
+        getConcatString(0, arr, "", powerSet);
+        /*for(String s: powerSet) {
+            System.out.println(s);
+        
+        }*/
+        String result = powerSet.stream().max(Comparator.comparing(String::length)).get();
+
+        //System.out.println(result);
+        return result.length();
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------
