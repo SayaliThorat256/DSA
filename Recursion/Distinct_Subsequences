@@ -1,0 +1,39 @@
+//approach 1
+class Solution {
+   // int result = 0;
+    public void getMaxPos(int pos, String s, String t, String str, List<String> result) {
+        if(pos >= s.length()) {
+            return ;
+        }
+        
+        if(str.length() > t.length()) {
+            return;
+        }
+        
+        if((str.length() + (s.length() - pos) < t.length())) {
+            return;
+        } 
+    
+        
+        String st = str + s.charAt(pos);
+        int m1 = 0;
+        int m2 = 0;
+        boolean flag = false;
+        if(st.equals(t)) {
+            result.add(t);
+            flag = true;
+        }
+         getMaxPos(pos + 1, s, t, st, result);
+         getMaxPos(pos + 1, s, t, str, result);
+
+    }
+    
+    
+    
+    
+    public int numDistinct(String s, String t) {
+      List<String> result = new ArrayList<>();
+       getMaxPos(0, s, t, "", result);
+        return result.size();
+    }
+}
