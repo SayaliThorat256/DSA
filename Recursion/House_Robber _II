@@ -1,0 +1,38 @@
+//Approach 1
+
+class Solution {
+    
+    public int getMaxRobAmount(int pos, int[] nums, int max, boolean first) {
+        if(pos >= nums.length) {
+            return max;
+        }
+        
+        
+        if(pos == nums.length - 1 && first) {
+            return max;
+        }
+        int m1 = 0;
+        int m2 = 0;
+        if(pos == 0) {
+            max = max + nums[pos];
+            m1 = getMaxRobAmount(pos + 2, nums, max, true);
+            max = max - nums[pos];
+            m2 = getMaxRobAmount(pos + 1, nums, max, false);
+        } else {
+            max = max + nums[pos];
+            m1 = getMaxRobAmount(pos + 2, nums, max, first);
+            max = max - nums[pos];
+            m2 = getMaxRobAmount(pos + 1, nums, max, first);
+        }
+        
+        
+        return Math.max(m1, m2);
+        
+    }
+    
+    public int rob(int[] nums) {
+        
+        
+        return getMaxRobAmount(0, nums, 0, false);
+    }
+}
