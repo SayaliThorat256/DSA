@@ -1,0 +1,48 @@
+class Solution {
+    
+    
+    
+    
+    
+    
+    public List<String> getSubset(int n) {
+        if(n == 1) {
+            List<String> result = new ArrayList<>();
+            result.add("0");
+            result.add("1");
+            return result;
+        }
+        
+        
+        List<String> resultTemp1 =  getSubset(n - 1);
+      //  List<String> resultTemp = new  ArrayList<>(resultTemp1);
+        List<String> powerSet = new ArrayList<>();
+        
+        for(String s : resultTemp1) {
+            powerSet.add("0" +  s);
+        }
+        
+        for(int i = resultTemp1.size() - 1; i >= 0; i--) {
+            powerSet.add("1" + resultTemp1.get(i));
+        }
+        
+        return powerSet;
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    public List<Integer> grayCode(int n) {
+        List<String> powerSet = getSubset(n);
+        
+        List<Integer> result = new ArrayList<>();
+        for(String s : powerSet) {
+            result.add(Integer.parseInt(s, 2));
+        }
+        return result;
+    }
+}
