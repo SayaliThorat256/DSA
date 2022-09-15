@@ -1,0 +1,96 @@
+//every row can have only one quuen
+//you can create array up if any thing is there in column
+//for right array(0,2) n == 3
+/* if u do
+row + column
+0 1 2
+1 2 3
+4 5 6
+so u can have right array up to 6 to check if right diagonal is empty
+*/
+
+/* for left diagonal row - column + n - 1
+2 1 0
+3 2 1
+4 3 2
+*/
+
+
+
+
+
+
+class Solution {
+    
+    private boolean isValid(int[] up, int[] right, int[] left, int row, int col, int n) {
+        if(up[col] == 1) {
+            return false;
+        }
+        if(right[row + col] == 1) {
+            return false;
+        }
+        if(left[row - col + n - 1] == 1) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void getPossibilities(int row, int n, List<String> subset, List<List<String>> powerSet, int[] up, int[] left, int[] right) {
+        
+        if(row == n) {
+            powerSet.add(new ArrayList<>(subset));
+            return;
+        }
+        
+       // System.out.println(row);
+        
+        for(int col = 0; col < n; col++) {
+           // System.out.println(row + " " + isValid(up, right,left, row, col, n));
+            if(isValid(up, right,left, row, col, n)) {
+                up[col] = 1;
+                right[row + col] = 1;
+                left[row - col + n - 1] = 1;
+                int i = 0;
+                String s = "";
+                while(i < col) {
+                    s = s + ".";
+                    i++;
+                }
+                s = s + "Q"; 
+                i++;
+                while(i < n) {
+                    s = s + ".";
+                    i++;
+                }
+                subset.add(s);
+                getPossibilities(row + 1, n , subset, powerSet, up, left, right);
+                up[col] = 0;
+                right[row + col] = 0;
+                left[row - col + n - 1] = 0;
+                subset.remove(subset.size() - 1);
+            }
+                
+            
+        }
+        
+        
+        
+        
+    }
+    
+    
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>>  powerSet = new ArrayList<>();
+        List<String>  subset = new ArrayList<>();
+        int[] up = new int[n];
+        int[] right = new int[n + n];
+        int[] left = new int[n + n];
+        
+        getPossibilities(0, n, subset, powerSet, up, left, right);
+        return powerSet;
+        
+        
+        
+    }
+}
