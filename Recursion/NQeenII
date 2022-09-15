@@ -1,0 +1,48 @@
+class Solution {
+    
+    
+    private boolean isValid(int[] up, int[] right, int[] left, int row, int col, int n) {
+        if(up[col] == 1) {
+            return false;
+        }
+        if(right[row + col] == 1) {
+            return false;
+        }
+        if(left[row - col + n - 1] == 1) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private int getPossibilities(int row, int n, int[] up, int[] left, int[] right, int res) {
+        
+        if(row == n) {
+            return res + 1;
+        }
+        int ans = 0;
+        for(int col = 0; col < n; col++) {
+            if(isValid(up, right,left, row, col, n)) {
+                up[col] = 1;
+                right[row + col] = 1;
+                left[row - col + n - 1] = 1;
+                ans += getPossibilities(row + 1, n , up, left, right, res);
+                up[col] = 0;
+                right[row + col] = 0;
+                left[row - col + n - 1] = 0;
+            }
+        }
+         return ans;
+    }
+    
+    
+    public int totalNQueens(int n) {
+        
+        int[] up = new int[n];
+        int[] right = new int[n + n];
+        int[] left = new int[n + n];
+        return getPossibilities(0, n, up, left, right, 0);
+        
+        
+    }
+}
