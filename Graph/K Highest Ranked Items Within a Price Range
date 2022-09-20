@@ -1,0 +1,70 @@
+class Pair implements Comparable<Pair> {
+        int distance = 0;
+        int price = 0;
+        int row = 0;
+        int col = 0;
+        public Pair(int distance, int price, int row, int col) {
+            this.distance = distance;
+            this.price = price;
+            this.row = row;
+            this.col = col;
+        }
+        
+        public int compareTo(Pair o) {
+            if(this.distance != o.distance) {
+                return this.distance - o.distance;
+            } else if(this.price != o.price){
+                return this.price - o.price;
+            } else if(this.row != o.row) {
+                return this.row - o.row;
+            } else {
+                return this.col - o.col;
+            }
+        }
+        
+    }
+
+class Solution {
+    
+    public List<List<Integer>> highestRankedKItems(int[][] grid, int[] pricing, int[] start, int k) {
+        PriorityQueue<Pair> pq = new  PriorityQueue<Pair>();
+        
+        List<List<Integer>> ans = new ArrayList<>();
+        int[][] direction = {{1, 0},{-1, 0},{0, 1},{0, -1}};
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        pq.add(new Pair(0, grid[start[0]][start[1]], start[0], start[1]));
+        visited[start[0]][start[1]] = true;
+        while(!pq.isEmpty()) {
+            Pair p = pq.remove();
+            if(pricing[0] <= p.price && pricing[1] >= p.price && --k >= 0) {
+                
+                List<Integer> subset = new ArrayList<>();
+                subset.add(p.row);
+                subset.add(p.col);
+                ans.add(subset);
+            }
+            if(k == 0) {
+                break;
+            }
+            
+            for(int[] d: direction) {
+                int r = p.row + d[0];
+                int c = p.col + d[1];
+                if(!(r < 0 || c < 0 || r == grid.length || c == grid[0].length || grid[r][c] == 0 || visited[r][c])) {
+                    visited[r][c] = true;
+                    pq.add(new Pair(p.distance + 1, grid[r][c], r ,c));
+                }
+            }
+            
+            
+            
+            
+        }
+        
+        return ans;
+        
+        
+        
+        
+    }
+}
