@@ -1,0 +1,64 @@
+class Solution {
+    public int snakesAndLadders(int[][] board) {
+        //BFS
+        
+        int n = board.length;
+        Queue<Integer> queue = new LinkedList<>();
+        int steps = 0;
+        boolean[][] visited = new boolean[n][n];
+        queue.add(1);
+        visited[n - 1][0] = true;
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            //we using for loop because for all values in queue we can go to max x + 6 positions in one step
+            for(int i = 0; i < size; i++) {
+                int x =  queue.remove();
+                if(x == n * n) {
+                    return steps;
+                }
+                
+                for(int j = 1; j <= 6; j++) {
+                    int curr = x + j;
+                    if(curr > n * n) {
+                        break;
+                    }
+                    int[] pos = findCoOrdinates(n, curr);
+                    if(visited[pos[0]][pos[1]]) {
+                        continue;
+                    }
+                    visited[pos[0]][pos[1]] = true;
+                    if(board [pos[0]][pos[1]] != -1) {
+                        queue.add(board [pos[0]][pos[1]]);
+                    } else {
+                        queue.add(curr);
+                    }
+                }
+                
+                
+
+            }
+            steps++;
+        }
+        
+        return -1;
+        
+    }
+    
+    
+    
+    
+    
+    public int[] findCoOrdinates(int n, int curr) {
+        //trial and error
+        int r = n - (curr - 1) / n - 1;
+        int c = (curr - 1) % n;
+        if(r%2 == n%2) {
+            return new int[]{r, n - 1 - c};
+        } else {
+             return new int[]{r, c};
+        }
+    }
+    
+    
+    
+}
