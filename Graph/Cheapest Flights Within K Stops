@@ -1,0 +1,83 @@
+class Pair implements Comparable<Pair>{
+    
+    int des = 0;
+    int price = 0;
+    int cost = 0;
+    
+    public Pair (int des, int price, int cost) {
+        this.des = des;
+        this.price = price;
+        this.cost = cost;
+    }
+    
+    @Override
+    public int compareTo(Pair that) {
+        return this.price - that.price;
+    }
+    
+    
+}
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+
+        boolean[] visited = new boolean[n];
+        PriorityQueue <Pair> q = new PriorityQueue<>();
+        int[] dist = new int[n];
+        int[] cost = new int[n];
+        Arrays.fill(dist, -1);
+        List<List<Pair>> graph = new ArrayList<>();
+        for(int i = 0; i < n; i++) {
+            List<Pair> adj = new ArrayList<>(); 
+            graph.add(adj);
+        }
+        for(int i = 0; i < flights.length; i++) {
+            List<Pair> adj = graph.get(flights[i][0]);
+            Pair destination = new Pair(flights[i][1], flights[i][2], 0);
+            adj.add(destination);
+        }
+        
+        q.add(new Pair(src, 0, 0));
+       
+        cost[src] = 0;
+        dist[src] = 0;
+        while(!q.isEmpty()) {
+            Pair p = q.remove();
+            int node = p.des;
+            int price = p.price;
+            int cost1 = p.cost;
+            
+             //cant reach destination through this route
+            if(node != dst && cost1 > k) {
+                continue;
+            }
+            
+            if(visited[node]) {
+                if(node == dst) {
+                    dist[node] = Math.min(dist[node], price);
+                     continue;
+                }
+                if(price < dist[node] || cost1 < cost[node]) { //if in case price is less or cost is less then consider it
+                    
+                } else {
+                    continue;
+                }
+            }
+            visited[node] = true;
+            dist[node] = price;
+            cost[node] = cost1;
+            for(Pair nb : graph.get(node)) {
+                q.add(new Pair(nb.des, nb.price + price, cost1 + 1));
+                
+            }
+            
+        }
+        if(dist[dst] != Integer.MAX_VALUE) {
+            return dist[dst];
+        }
+        
+       return -1;
+        
+    }
+    
+   
+    }
