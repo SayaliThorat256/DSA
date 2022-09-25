@@ -1,0 +1,43 @@
+class Solution {
+    char[] arr;
+    int index = 0;
+    public int calculate(String s) {
+        arr = s.toCharArray();
+        int result = dfs();
+        return result;
+    }
+    
+    
+    public int dfs() {
+         int sum = 0;
+            int operand = 1;
+        while(index < arr.length) {
+           
+            
+            if(arr[index] == ')') {
+                return sum;
+            } else if(arr[index] == '(') {
+                index++;
+                sum = sum + operand * dfs();
+            } else if(arr[index] == '+') {
+                operand = 1;
+            } else if(arr[index] == '-') {
+                operand = -1;
+            } else if(Character.isDigit(arr[index])) {
+                StringBuilder sb = new StringBuilder();
+                while(index < arr.length && Character.isDigit(arr[index])) {
+                    sb.append(arr[index]);
+                    index++;
+                }
+                index--;
+                int num = Integer.parseInt(sb.toString());
+                sum = sum + (operand * num);
+            }
+            index++;
+            
+        }
+        
+        return sum;
+        
+    }
+}
