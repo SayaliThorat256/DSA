@@ -1,0 +1,41 @@
+//231*+9- Ans is -4
+class Solution
+{
+    //Function to evaluate a postfix expression.
+    public static int evaluatePostFix(String S)
+    {
+        Stack<Integer> stack = new Stack<Integer>();
+        
+        for(int i = 0; i < S.length(); i++) {
+            if(Character.isDigit(S.charAt(i))) {
+                stack.push(Integer.parseInt(S.substring(i, i+1)));
+               // System.out.println(Integer.parseInt(S.substring(i, i+1)));
+            } else {
+                if(stack.size() > 1) {
+                int b = stack.pop();
+                int a = stack.pop();
+                int result = calculateValue(a, b, S.charAt(i));
+               // System.out.println(a + " " +  b +" " +result);
+                stack.push(result);
+                }
+               
+            }
+        }
+        int res = stack.pop();
+        return res;
+    }
+    
+    public static int calculateValue(int a, int b, char c) {
+        switch(c) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                return a / b;
+        }
+        return 0;
+    }
+}
