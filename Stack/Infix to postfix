@@ -1,0 +1,106 @@
+class Solution {
+    // Function to convert an infix expression to a postfix expression.
+    public static String infixToPostfix(String exp) {
+       Stack<Character> stack = new Stack<Character>();
+       HashSet<Character> set = new HashSet<Character>();
+       set.add('+');
+       set.add('-');
+       set.add('*');
+       set.add('/');
+       set.add('(');
+       set.add(')');
+       set.add('^');
+       
+       String result =  "";
+       for(int i = 0; i < exp.length(); i++) {
+           if(set.contains(exp.charAt(i))) {
+               if(stack.isEmpty()) {
+                   stack.push(exp.charAt(i));
+               } else {
+                   result = getExp(exp.charAt(i), stack, result);
+               }
+           } else {
+               result = result + exp.charAt(i);
+           }
+       }
+       while(!stack.isEmpty()) {
+           result = result + stack.pop();
+       }
+       return result;
+       
+       
+    }
+    
+    public static String getExp(char c, Stack<Character> stack, String res) {
+        char pre ='+';
+        switch(c) {
+            case '(' :
+                stack.push(c);
+                break;
+            case ')' :
+                char brace = stack.pop();
+                while(brace != '(') {
+                    res = res + brace;
+                    brace = stack.pop();
+                }
+                break;
+            case '+' :
+                pre = stack.peek();
+                if(pre == '^' || pre == '*' || pre == '/' || pre == '-' ||  pre == c) {
+                    res = res + stack.pop();
+                    if(stack.size() > 0) {
+                        res = getExp(c, stack, res);
+                    } else {
+                        stack.push(c);
+                    }
+                } else {
+                    stack.push(c);
+                }
+                break;
+            case '-' :
+                pre = stack.peek();
+                if(pre == '^' || pre == '*' || pre == '/' || pre == '+' ||  pre == c) {
+                    res = res + stack.pop();
+                    if(stack.size() > 0) {
+                        res = getExp(c, stack, res);
+                    } else {
+                        stack.push(c);
+                    }
+                    
+                } else {
+                    stack.push(c);
+                }
+                break;
+            case '*' :
+                pre = stack.peek();
+                if(pre == '^' || pre == '/'||  pre == c) {
+                    res = res + stack.pop();
+                    if(stack.size() > 0) {
+                        res = getExp(c, stack, res);
+                    } else {
+                        stack.push(c);
+                    }
+                } else {
+                    stack.push(c);
+                }
+                break;
+            case '/' :
+                pre = stack.peek();
+                if(pre == '^' || pre == '*'||  pre == c) {
+                    res = res + stack.pop();
+                    if(stack.size() > 0) {
+                        res = getExp(c, stack, res);
+                    } else {
+                        stack.push(c);
+                    }
+                } else {
+                    stack.push(c);
+                }
+                break;
+            case '^' :
+                stack.push(c);
+                break;
+        }
+        return res;
+    }
+}
