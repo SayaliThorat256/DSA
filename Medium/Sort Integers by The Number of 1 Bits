@@ -1,0 +1,45 @@
+class Pair implements Comparable<Pair> {
+    int x = 0;
+    int cn = 0;
+    public Pair(int x, int cn) {
+        this.x = x;
+        this.cn = cn;
+    }
+   
+    public int compareTo(Pair obj) {
+        if(cn != obj.cn) {
+            return cn - obj.cn;
+        } else {
+            return x - obj.x;
+        }
+    }
+}
+
+class Solution {
+    public int countOnes(int n) {
+        int count = 0;
+        for(int i = 0; i < 32; i++) {
+            if((n & (1 << i)) > 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int[] sortByBits(int[] arr) {
+        Queue<Pair> queue = new PriorityQueue<>();
+        for(int i : arr) {
+            queue.add(new Pair(i, countOnes(i)));
+        }
+        int[] result = new int[arr.length];
+        for(int i = 0; i < arr.length; i++) {
+            result[i] = queue.remove().x;
+        }
+        
+        /*
+         Integer[] wrappedArr = Arrays.stream(arr).boxed().toArray(Integer[]::new);
+    Arrays.sort(wrappedArr, (a,b) -> Integer.bitCount(a) == Integer.bitCount(b) ? a-b : Integer.bitCount(a)-Integer.bitCount(b));
+    return Arrays.stream(wrappedArr).mapToInt(Integer::intValue).toArray();
+    */
+        return result;
+    }
+}
