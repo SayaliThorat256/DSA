@@ -13,11 +13,8 @@ class Solution {
             return str;
         }
         
-        String s = "";
-        s = s + "_" + duplicates(map, str, powerSet ,root.left);
-       
-        s = s + "_" + duplicates(map, str, powerSet ,root.right);
-        s = root.val+ "_"+ s;
+        String s = root.val + "_" + duplicates(map, str, powerSet ,root.left) + "_" + duplicates(map, str, powerSet ,root.right);
+    
         
         if(map.get(s) == null) {
                 map.put(s, 1);
