@@ -1,0 +1,61 @@
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+       List<TreeNode> list1 = new ArrayList<>();
+        getAllAncestor(list1, root, p);
+       
+        
+        List<TreeNode> list2 = new ArrayList<>();
+        getAllAncestor(list2, root, q);
+     
+        int k = (list1.size() < list2.size()) ? list1.size() : list2.size();
+       
+        for(int i = 0; i < k; i++) {
+          
+            if(list1.get(i).val != list2.get(i).val) {
+        
+                return list1.get(i - 1);
+            }
+        }
+        if(list1.size() > list2.size()) {
+                    return list2.get(list2.size() - 1);
+        } else {
+                    return list1.get(list1.size() - 1);
+        }
+        
+        
+    
+    }
+    
+    
+    public boolean getAllAncestor(List<TreeNode> list, TreeNode root, TreeNode n) {
+        if(root == null) {
+            return false;
+        }
+        if(root == n) {
+            list.add(n);
+            return true;
+        }
+        
+        boolean result = true;
+        list.add(root);
+        result = getAllAncestor(list, root.left, n);
+        if(result) {
+            return true;
+        }
+     
+        if(root.left != null) {
+            list.remove(list.size() - 1);
+        }
+        
+         result = getAllAncestor(list, root.right, n);
+        if(result) {
+            return result;
+        } else {
+            if(root.right != null) {
+            list.remove(list.size() - 1);
+        }
+        }
+        return false;
+    }
+}
