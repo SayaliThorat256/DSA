@@ -1,0 +1,26 @@
+class Solution {
+    public int findSecondMinimumValue(TreeNode root) {
+        HashMap<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
+        secondMin(root, hm, pq);
+        if (pq.size() != 2) return -1;
+        return pq.poll();
+    }
+    
+   private void secondMin(TreeNode root, HashMap<Integer, Boolean> hm, PriorityQueue<Integer> pq) {
+        if (root == null) return;
+        
+        if(!hm.containsKey(root.val)) {
+            hm.put(root.val, true);
+            if (pq.size() < 2) pq.add(root.val);
+            else {
+                if (pq.peek() > root.val) {
+                    pq.poll();
+                    pq.add(root.val);
+                }
+            }
+        }
+        secondMin(root.left, hm, pq);
+        secondMin(root.right, hm, pq);
+    }
+}
