@@ -1,0 +1,41 @@
+class Solution {
+    public boolean isPossible(int[] weights, int days, int mid) {
+        boolean isValid = true;
+        int daysCount = 1;
+        int total = 0;
+        for(int i = 0; i < weights.length; i++) {
+            if(weights[i] > mid) {
+                return false;
+            }
+            if(total + weights[i] <= mid) {
+                total = total + weights[i];
+            } else {
+                total =  weights[i];
+                daysCount++;
+            }
+        }
+        if(daysCount <= days) {
+            return true;
+        }
+        return false;
+    }
+    
+    
+    public int shipWithinDays(int[] weights, int days) {
+        int l = 0; 
+        int r = 0;
+        for(int i : weights) {
+            r  = r + i;
+        }
+        
+        while(l < r) {
+            int mid = (r - l)/2 + l;
+            if(isPossible(weights, days, mid)) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+}
