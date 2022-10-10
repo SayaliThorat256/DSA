@@ -1,0 +1,69 @@
+class Solution {
+    public boolean isCompleteTree(TreeNode root) {
+        int height = getHeightOfTree(root);
+        Queue<TreeNode> treeList = new LinkedList<>();
+        treeList.add(root);
+        int level = 0;
+        while(!treeList.isEmpty()) {
+            int length = treeList.size();
+            if(level < height - 2) {
+                if(Math.pow(2, level) != length) {
+                    return false;
+                }
+                level++;
+                while(length != 0) {
+                   TreeNode node = treeList.remove();
+                    if(node.left != null) {
+                        treeList.add(node.left);
+                    } 
+                    if(node.right != null) {
+                        treeList.add(node.right);
+                    }
+                    length--;
+                }
+            } else {
+                 length = treeList.size();
+                if(Math.pow(2, level) != length) {
+                    return false;
+                }
+               boolean empty = false;
+               boolean rightEmpty = false;
+                while(!treeList.isEmpty()) {
+                    TreeNode node = treeList.remove();
+                   // System.out.println(node.val);
+                    if(empty) {
+                        if(node.left != null || node.right != null) {
+                            return false;
+                        }
+                    }
+                    if(rightEmpty) {
+                        if(node.left != null || node.right != null) {
+                            return false;
+                        }
+                    }
+                   if(node.left == null && node.right == null) {
+                       empty = true;
+                   } else if(node.left == null && node.right != null) {
+                       return false;
+                   } else if(node.left != null && node.right == null) {
+                       rightEmpty = true;
+                   }
+                }
+                
+                
+            }
+           
+        }
+         return true;
+    }
+    
+    public int getHeightOfTree(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        int left = getHeightOfTree(root.left);
+        int right = getHeightOfTree(root.right);
+        
+        return Math.max(left, right) + 1;
+    }
+}
