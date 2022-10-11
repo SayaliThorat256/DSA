@@ -1,0 +1,26 @@
+class Solution {
+    Map<Integer, Integer> map = new HashMap<>();
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = inorder.length;
+        for(int i = 0; i < n; i++) {
+            map.put(inorder[i], i);
+        }
+        
+        return dfs(0, 0, n - 1, preorder, inorder);
+    }
+   
+    
+    private TreeNode dfs(int index, int start, int end, int[] preorder, int[] inorder) {
+        if(index > preorder.length  - 1 || start > end) {
+            return null;
+        }
+        int val = preorder[index];
+        int diff = map.get(val);
+        TreeNode cur = new TreeNode(val);
+        
+        cur.left = dfs(index + 1, start, diff - 1, preorder, inorder);
+        cur.right = dfs(index + (diff - start + 1), diff + 1, end, preorder, inorder);
+        return cur;
+    }
+    
+}
