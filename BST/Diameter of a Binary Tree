@@ -1,0 +1,28 @@
+class Solution {
+    // Function to return the diameter of a Binary Tree.
+    int result = 0;
+    int diameter(Node root) {
+        getAnswer(root);
+        return result;
+    }
+    
+    public void getAnswer(Node root) {
+        if(root == null) {
+            return;
+        }
+        result = Math.max(result, getDiameter(root));
+        getAnswer(root.left);
+        getAnswer(root.right);
+    }
+    int getDiameter(Node root) {
+        return height(root.left) + height(root.right) + 1;
+    }
+    
+    int height(Node node) {
+        if(node == null) {
+            return 0;
+        }
+        return Math.max(height(node.left), height(node.right)) + 1;
+    }
+    
+}
