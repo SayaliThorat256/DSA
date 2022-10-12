@@ -1,0 +1,48 @@
+/*
+The TreeMap in Java is used to implement Map interface and NavigableMap along with the AbstractMap Class. The map is sorted according to the natural ordering of its keys, or by a Comparator provided at map creation time, depending on which constructor is used. This proves to be an efficient way of sorting and storing the key-value pairs. The storing order maintained by the treemap must be consistent with equals just like any other sorted map, irrespective of the explicit comparators. 
+*/
+
+class Solution
+{
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+   static class QueueNode{
+        Node node;
+        int ht = 0;
+        public QueueNode(Node node, int ht) {
+            this.node = node;
+            this.ht = ht;
+        }
+    }
+    static ArrayList<Integer> topView(Node root)
+    { 
+        
+        ArrayList<Integer> result =  new ArrayList<>();
+        Map<Integer, Integer> map = new TreeMap<>();
+        Queue<QueueNode> queue = new LinkedList<>();
+        queue.add(new QueueNode(root, 1));
+        while(!queue.isEmpty()) {
+            QueueNode queueNode = queue.remove();
+            Node node = queueNode.node;
+            int ht = queueNode.ht;
+            if(map.get(ht) == null) {
+                map.put(ht, node.data);
+            }
+           
+            if(node.left != null) {
+                queue.add(new QueueNode(node.left, ht - 1));
+            }
+            
+            if(node.right != null) {
+                queue.add(new QueueNode(node.right, ht + 1));
+            }
+            
+        }
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            result.add(entry.getValue());
+        }
+        return result;
+       
+        
+    }
+}
