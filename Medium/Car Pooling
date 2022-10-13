@@ -1,0 +1,57 @@
+class Solution {
+    public boolean carPooling(int[][] trips, int capacity) {
+        //sort base on starting point
+        Arrays.sort(trips, (a,b) -> a[1] - b[1]);
+        int N = trips.length;
+        
+        //sorting based on destination the trip ending first will always be at top
+        //asending - as we change comparator
+        
+        Queue<int[]> endTimeQ = new PriorityQueue<int[]>((a,b) -> a[2]-b[2]);
+        int passengers = 0;
+        for(int i = 0; i < N; i++) {
+            int currentStartpoint = trips[i][1];
+            //here we are checking does queue have destination which are before current starting location
+            // if yes then remove that many passengers
+            while(!endTimeQ.isEmpty() && currentStartpoint >= endTimeQ.peek()[2]) {
+                passengers-= endTimeQ.poll()[0];
+            }
+            //add passengers of current trip
+            passengers += trips[i][0];
+            endTimeQ.add(trips[i]);
+            if(passengers > capacity) {
+                return false;
+            }
+            
+            
+        }
+        
+        return true;
+        
+        
+        
+        
+        
+        
+       /* int[] tripArray = new int[1001];
+        for(int[] arr: trips) {
+            for(int i = arr[1]; i < arr[2]; i++) {
+                tripArray[i]+=arr[0];
+            }
+        }
+        return Arrays.stream(tripArray).max().getAsInt() <= capacity;*/
+        
+       /* for(int[] arr: trips) {
+            tripArray[arr[1]] += arr[0];
+            tripArray[arr[2]] -= arr[0];
+        }
+        int res = 0;
+        for(int i : tripArray) {
+            res+=i;
+            if(res > capacity) {
+                return false;
+            }
+        }
+        return true;*/
+    }
+}
