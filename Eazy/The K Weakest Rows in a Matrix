@@ -1,0 +1,71 @@
+class Solution {
+    public int[] kWeakestRows(int[][] mat, int k) {
+        
+         PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);
+        int i = 0;
+        for(int[] m : mat) {
+            int low = 0;
+            int high = m.length;
+            while(low < high) {
+                int mid = (low + high) / 2;
+                if(m[mid] == 1) {
+                    low = mid + 1;
+                } else {
+                    high = mid;
+                }
+            }
+            queue.add(new int[] {low, i++});
+        }
+        int[] result = new int[k];
+        for(i = 0; i < k; i++) {
+            result[i] = queue.poll()[1];
+        }
+        return result;
+        
+       /* Map<Integer, List<Integer>> map = new TreeMap<>();
+        
+        int i = 0;
+        for(int[] array : mat) {
+            int sum = Arrays.stream(array).reduce(Integer::sum).getAsInt();
+            if(map.get(sum) == null) {
+                List<Integer> list = new ArrayList<>();
+                list.add(i++);
+                map.put(sum, list);
+            } else {
+                List<Integer> list = map.get(sum);
+                list.add(i++);
+                map.put(sum, list);
+            }
+        }
+        i = 0;
+       int[] result = new int[k];
+        for(Map.Entry<Integer, List<Integer>> set: map.entrySet()) {
+            List<Integer> list = set.getValue();
+            for(int l : list) {
+                if(i == k) {
+                    return result;
+                }
+                result[i++] = l;
+            }
+        }
+        return result;
+        */
+        
+       /* int[][] arr = new int[mat.length][2];
+        int i = 0;
+        for(int[] array : mat) {
+            int sum = Arrays.stream(array).reduce(Integer::sum).getAsInt();
+            arr[i][0] = i;
+            arr[i++][1] = sum;
+        }
+        
+        Arrays.sort(arr, (a,b) -> a[1] - b[1]);
+      
+        int[] result = new int[k];
+        for(i = 0; i < k; i++) {
+            result[i] = arr[i][0];
+        }
+        
+        return result;*/
+    }
+}
