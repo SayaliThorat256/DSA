@@ -1,0 +1,43 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        int temp = 0;
+        if(x < 0 || (x != 0 && x % 10 == 0 )) {
+            return false;
+        }
+        while(x > temp) {
+             temp = (temp * 10) + (x % 10);
+             x = x / 10;
+        }
+        
+        return (temp == x) || (x == (temp / 10));
+        
+        /*String s = x + "";
+        int l = 0;
+        int h = s.length() - 1;
+        while(l < h) {
+            if(s.charAt(l) != s.charAt(h)) {
+                return false;
+            }
+            l++;
+            h--;
+        }
+        return true;*/
+        
+      /*  int m = 0;
+        int bkp = x;
+        if( x < 0) {
+            return false;
+        }
+        System.out.println(Integer.reverse(x));
+        while(x != 0) {
+            m = (m * 10) + (x % 10);
+            x = x / 10;
+             //System.out.println(x);
+        }
+        if(m == bkp) {
+            return true;
+        } else {
+            return false;
+        }*/
+    }
+}
