@@ -1,0 +1,27 @@
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        boolean first = true;
+        ListNode ans = null;
+        ListNode prev = null;
+        while(head != null) {
+            if(head.val != val) {
+                if(ans == null) {
+                    ans = head;
+                    first = false;
+                }
+                prev = head;
+                head = head.next;
+            } else {
+                if(first) {
+                   // ListNode temp = head;
+                    head = head.next;
+                    //temp.next = null;
+                } else {
+                    prev.next = head.next;
+                    head = head.next;
+                }
+            }
+        }
+        return ans;
+    }
+}
