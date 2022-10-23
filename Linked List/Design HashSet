@@ -1,0 +1,23 @@
+//extends hash set class
+//use linklist and hashing function so we don't need huge size of array 
+
+
+class MyHashSet {
+ //   int size = (int)Math.pow(10, 6)+1;
+    boolean[] flag;
+    public MyHashSet() {
+        flag = new boolean[10000001];
+    }
+    
+    public void add(int key) {
+        flag[key] = true;
+    }
+    
+    public void remove(int key) {
+        flag[key] = false;
+    }
+    
+    public boolean contains(int key) {
+        return flag[key];
+    }
+}
