@@ -1,0 +1,73 @@
+class Solution {
+    public ListNode  reverseKGroup(ListNode head, int k) {
+       ListNode headBkp = head;
+        int size = 0;
+        while(head != null) {
+            size++;
+            head = head.next;
+        }
+        
+        head = headBkp;
+        boolean first = true;
+        
+        ListNode ans = null;
+        ListNode bkphead = null;
+        while(headBkp != null) {
+            head = headBkp;
+            if(head == null || ((size - k) < 0)) {
+            bkphead.next = head;
+              break;
+            }
+            int m = k ;
+            ListNode temp = null;
+            ListNode prev = null;
+            ListNode current = head;
+            ListNode bkp = head;
+            while(m > 0 && current != null) {
+                temp = current;
+                current = current.next;
+                temp.next = prev;
+                prev = temp;
+                m--;    
+            }
+            size = size - k;
+            headBkp = current;
+            if(first) {
+                ans = prev;
+                bkphead = bkp;
+                first = false;
+            } else {
+                bkphead.next = prev;
+                bkphead = bkp;
+            }
+            
+            
+        }
+        
+        return ans;
+        
+        //return reverseInGroup(headBkp, k , size);
+    }
+    
+    public ListNode reverseInGroup(ListNode head, int k, int size) {
+         if(head == null || ((size - k) < 0)) {
+            return head;
+        }
+        int m = k ;
+        ListNode temp = null;
+        ListNode prev = null;
+        ListNode current = head;
+        ListNode bkp = head;
+        while(m > 0 && current != null) {
+            temp = current;
+            current = current.next;
+            temp.next = prev;
+            prev = temp;
+            m--;
+        }
+        size = size - k;
+        bkp.next = reverseInGroup(current, k, size);
+        return prev;
+        
+        
+    }
