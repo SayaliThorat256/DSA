@@ -1,0 +1,25 @@
+class Solution {
+    public int reverse(int x) {
+        
+        String ans = x < 0 ? new StringBuilder(String.valueOf(-x)).append("-").reverse().toString()
+                : new StringBuilder(String.valueOf(x)).reverse().toString();
+        try {
+            return Integer.parseInt(ans);
+        } catch (Exception e) {
+            return 0;
+        }
+    
+    /* 
+        long m = 0;
+        while(x != 0) {
+            m = (m * 10) + (x % 10);
+            x = x / 10;
+           
+        }
+         if(m > Integer.MAX_VALUE || m < Integer.MIN_VALUE) {
+            return 0;
+          }
+        
+        return (int)m;*/
+    }
+}
