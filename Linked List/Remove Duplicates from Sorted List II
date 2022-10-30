@@ -1,0 +1,101 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode temp = dummy;
+        
+        while(head != null) {
+            if(head.next != null && head.val == head.next.val) {
+                while(head.next != null && head.val == head.next.val) {
+                    head = head.next;
+                }
+                 
+            } else {
+                temp.next = head;
+                temp = temp.next;
+            }
+            head = head.next;
+        }
+        temp.next = null;
+        return dummy.next;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+     /*   int[] pos = new int[101];*
+        int[] neg = new int[101];
+        
+        ListNode bkp = head;
+        while(head != null) {
+            if(head.val < 0) {
+                neg[-head.val] = neg[-head.val] + 1;
+            } else {
+                pos[head.val] = pos[head.val] + 1;
+            }
+            head = head.next;
+        }
+        ListNode dummy = new ListNode(-1);
+        dummy.next = bkp;
+        ListNode temp = dummy;
+      
+        while(temp.next != null) {
+           
+            if(temp.next.val < 0) {
+              
+                if(neg[-temp.next.val] > 1) {
+                    temp.next = temp.next.next;
+                } else {
+                    temp = temp.next;
+                }
+            } else {
+                if(pos[temp.next.val] > 1) {
+                    temp.next = temp.next.next;
+                } else {
+                    temp = temp.next;
+                }
+            }
+        }
+        return dummy.next;
+        
+       */ 
+        
+        
+      /*   if(head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        ListNode ans = dummy;
+        
+        ListNode prev = head;
+        head = head.next;
+        Set<Integer> set = new HashSet<>();
+        
+       while(head != null) {
+            if(head.val != prev.val && !set.contains(prev.val)) {
+                dummy.next = prev;
+                dummy = dummy.next;
+            } else {
+                set.add(prev.val);
+            }
+           prev = head;
+           head = head.next;
+        }
+        
+        if(!set.contains(prev.val)) {
+            dummy.next = prev;
+            dummy = dummy.next;
+        } else {
+            dummy.next = null;
+        }
+        return ans.next;*/
+        
+    }
+}
