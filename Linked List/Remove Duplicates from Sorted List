@@ -1,0 +1,67 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+      /*  ListNode ans = head;
+        ListNode prev = head;
+        head = head.next;
+        
+        
+       while(head != null) {
+            if(head.val == prev.val) {
+                prev.next = head.next;
+            } else {
+                prev = head;
+            }
+            head = head.next;
+            
+        }
+        return ans;*/
+        
+        
+        ListNode temp = head;
+        
+        while(temp.next != null) {
+            
+            if(temp.val == temp.next.val) {
+                temp.next = temp.next.next;
+            } else {
+                temp = temp.next;
+            }
+            
+        }
+        return head;
+        
+       /* if(head == null) {
+            return null;
+        }
+        return deleteDuplicate(head);*/
+    }
+    
+
+    
+    private ListNode deleteDuplicate(ListNode head) {
+        if(head.next == null) {
+            return head;
+        }
+        
+        
+        ListNode nextNode = deleteDuplicate(head.next);
+        
+     /*   if(head.val == nextNode.val) {
+            head.next = nextNode.next;
+        }*/
+       // System.out.println(head.val + " " + nextNode.val);
+         if(head.val == nextNode.val) {
+             return nextNode;
+         } else {
+             head.next = nextNode;
+         }
+        
+        return head;
+        
+    }
+    
+    
+}
