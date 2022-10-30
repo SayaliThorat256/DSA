@@ -21,10 +21,21 @@ class Solution {
         return dummy.next;
         
         
+        /* while(head != null) {
+            if(head.next != null && head.val == head.next.val) {
+                while(head.next != null && head.val == head.next.val) {
+                    head = head.next;
+                }
+                 temp.next = head.next;
+            } else {
+                
+                temp = temp.next;
+            }
+            head = head.next;
+        }
         
         
-        
-        
+        */
         
         
         
