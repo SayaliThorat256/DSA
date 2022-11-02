@@ -1,5 +1,23 @@
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
+    /*
+    
+         ListNode dummy = new ListNode(-1);
+        ListNode ans = dummy;
+        while(head != null) {
+            if(head.val != val) {
+                ans.next = head;
+                ans = ans.next;
+            }
+            head = head.next;
+        }
+        ans.next = null;
+        
+        return dummy.next;
+        
+    
+    */
+    
         boolean first = true;
         ListNode ans = null;
         ListNode prev = null;
