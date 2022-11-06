@@ -1,0 +1,40 @@
+class Solution {   
+    Map<Integer, Boolean> map = new HashMap<>();
+    public  boolean jump(int pos, int[] nums, int length) {
+        
+        if(pos == length) {
+            return true;
+        } else if(pos > length) {
+            return false;
+        } else {
+        
+        	int num = nums[pos];
+        	while(num > 0) {
+                int a = pos + num;
+                if(map.get(a) != null) {
+                    return map.get(a);
+                }   
+        		boolean flag1 = jump(a, nums, length);
+        		if(flag1 == true) {
+        			return true;
+        		}
+                map.put(a, false);
+        		num--;
+        	}
+           
+
+        return false;
+        }
+        
+        
+    } 
+        
+        
+    
+
+    public boolean canJump(int[] nums) {
+        
+        boolean result =  jump(0, nums, nums.length - 1);
+        return result;
+    }
+}
