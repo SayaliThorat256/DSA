@@ -21,3 +21,48 @@ class Solution {
 
     }
 }
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null) {
+            return null;
+        }
+        if(head.next == null) {
+            Node node = new Node(head.val);
+            if(head.random != null) {
+                node.random = node;
+            }
+        }
+        Node dummy = new Node(-1);
+        Node ans = dummy;
+        Node head_bkp = head;
+        while(head != null) {
+            Node current = new Node(head.val); 
+            current.next = head.next;
+            head.next = current;
+            head = current.next;
+        }
+        head = head_bkp;
+        while(head != null) {
+            if(head.random != null) {
+                head.next.random = head.random.next;
+            }
+            head = head.next.next;
+        }
+        head = head_bkp;
+        ans.next = head.next;
+        ans = ans.next;
+        while(head.next.next != null) {
+            head.next = head.next.next;
+            head = head.next;
+            ans.next = ans.next.next;
+            ans = ans.next;
+
+        }
+        head.next = null;
+        
+        return dummy.next;
+
+
+    }
+}
