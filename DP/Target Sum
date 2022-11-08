@@ -1,0 +1,39 @@
+class Key {
+    int index;
+    int total;
+    public Key(int index, int total) {
+        this.index = index;
+        this.total = total;
+    }
+}
+class Solution {
+    Map<Key, Integer> map = new HashMap<>();
+
+    public int numberOfWays(int pos, int sum, int[] nums, int target, int ans) {
+        Key key = new Key(pos, sum);
+        
+        if(pos == nums.length) {
+            if(sum == target) {
+                return ans + 1;
+            } else {
+                return ans;
+            }
+        }
+
+        if(map.get(key) != null) {
+            return map.get(key);
+        }
+       
+        ans = numberOfWays(pos + 1, sum + nums[pos], nums, target, ans);
+        ans = numberOfWays(pos + 1, sum - nums[pos], nums, target, ans);
+        map.put(new Key(pos, sum), ans);
+        return ans;
+    }
+
+
+
+    public int findTargetSumWays(int[] nums, int target) {
+        return numberOfWays(0, 0, nums, target, 0);
+        
+    }
+}
