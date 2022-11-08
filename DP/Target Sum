@@ -68,3 +68,24 @@ class Solution {
         
     }
 }
+
+
+/*
+    public int numberOfWays(int pos, int sum, int[] nums, int target, int ans) {
+        if(pos == nums.length) {
+            if(sum == target) {
+                return ans + 1;
+            } else {
+                return ans;
+            }
+        }
+        
+        if(dp[pos][sum + total] != Integer.MIN_VALUE) {
+            return dp[pos][sum + total];
+        }
+       
+        int ans1 = numberOfWays(pos + 1, sum + nums[pos], nums, target, ans);
+        int ans2 = numberOfWays(pos + 1, sum - nums[pos], nums, target, ans);
+        dp[pos][sum + total] = ans1 + ans2;
+        return ans1 + ans2;
+    */
