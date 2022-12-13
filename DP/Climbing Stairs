@@ -1,0 +1,36 @@
+class Solution {
+    int result = 0;
+    
+    public void getdecisionTree(int pos, int n) {
+        if(pos == n) {
+            result++;
+            return;
+        }
+        if(pos > n) {
+            return;
+        }
+        getdecisionTree(pos + 1, n);
+        getdecisionTree(pos + 2, n);
+        
+    }
+    
+    
+    public int climbStairs(int n) {
+        int[] dp = new int[46];
+        getdecisionTree(0, n);
+        return result;
+     /*   int n1 = 0;
+        int n2 = 1;
+        int steps = 0;
+        5 4 3 2 1
+       0 1 1 2 3 5
+        for(int i = 1; i <= n; i++) {
+            steps = n1 + n2; //becaue we always want to add last two
+            n1 = n2;
+            n2 = steps;
+            
+        }
+        
+        return steps;*/
+    }
+}
