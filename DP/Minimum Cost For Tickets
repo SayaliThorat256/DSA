@@ -1,0 +1,62 @@
+class Solution {
+
+
+public int mincostTicketsfun(int[] days, int[] costs) {
+    // length up to the last travel + 1 day is good enough (no need for 365)
+    int lastDay = days[days.length - 1]; 
+    // dp[i] means up to i-th day the minimum cost of the tickets
+    int[] dp = new int[lastDay + 1]; 
+    boolean[] isTravelDays = new boolean[lastDay + 1];
+    // mark the travel days
+    for(int day : days) isTravelDays[day] = true;
+    
+    for(int i = 1; i <= lastDay; i++) {
+        if(!isTravelDays[i]) { // no need to buy ticket if it is not a travel day
+            dp[i] = dp[i - 1];
+            continue;
+        }
+        // select which type of ticket to buy
+        dp[i] = costs[0] + dp[i - 1]; // 1-day
+        dp[i] = Math.min(costs[1] + dp[Math.max(i - 7, 0)], dp[i]); // 7-day
+        dp[i] = Math.min(costs[2] + dp[Math.max(i - 30, 0)], dp[i]); // 30-day
+    }
+    return dp[lastDay];
+}
+
+
+
+
+    Map<Integer, Integer> map = new HashMap<>();
+    int[] da = new int[] {1, 7, 30};
+
+    public int decisionTree(int index, int[] days, int[] costs) {
+        if(index == days.length) {
+            return 0; //no days to travel so cost is zero
+        }
+
+        if(map.get(index) != null) {
+            return map.get(index);
+        } else {
+            map.put(index, Integer.MAX_VALUE);
+        }
+
+        for(int nDayPass = 0 ; nDayPass < da.length; nDayPass++) { // need to check each pass like 1, 7 , 30
+            int j = index;
+            //check whether to jump to next index or not 
+            //suppose days[index] = 1; and days[j] = 8 for 7 days pass so its greater you can not go any further wuth that pass. you can not travel to that day 
+            while(j < days.length && days[j] < days[index] + da[nDayPass]) {
+                j += 1;
+                map.put(index, Math.min(map.get(index), costs[nDayPass] + decisionTree(j, days, costs)));
+            }
+        }
+        return map.get(index);
+
+
+    }
+
+
+    public int mincostTickets(int[] days, int[] costs) {
+        //return decisionTree(0, days, costs);
+        return mincostTicketsfun(days,costs);
+    }
+}
