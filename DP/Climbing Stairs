@@ -23,6 +23,7 @@ class Solution {
         int n2 = 1;
         int steps = 0;
         5 4 3 2 1
+        //fibonacci series
        0 1 1 2 3 5
         for(int i = 1; i <= n; i++) {
             steps = n1 + n2; //becaue we always want to add last two
