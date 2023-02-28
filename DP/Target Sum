@@ -1,3 +1,5 @@
+//if minimum maximum no of ways is there - dp problems
+
 class Solution {
     int[][] dp = null;
     int total;
