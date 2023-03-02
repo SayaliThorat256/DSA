@@ -1,0 +1,64 @@
+class Solution {
+    
+    int[][] dp = null;
+
+
+
+    public int withLessMemory(int amount, int[] coins) {
+     
+
+     int[] dpCurrent = new int[amount + 1];
+     int[] dpOld = new int[amount + 1];
+     dpCurrent[0] = 1;
+     dpOld[0] = 1;
+
+     for(int i = coins.length - 1; i >= 0; i--) {
+         for(int a = 1; a < dpCurrent.length; a++) {
+             if(a - coins[i] >= 0) {
+                dpCurrent[a] = dpOld[a] + dpCurrent[a - coins[i]];
+             }
+         }
+         dpOld = dpCurrent;
+     }
+
+      return dpCurrent[amount];
+    }
+
+
+    public int recursion(int index, int amount, int[] coins, int sum) {
+         if(index == coins.length) {
+             return 0;
+         }
+
+         if(sum == amount) {
+             return 1;
+         }
+        
+         
+
+        if(sum > amount) {
+            return 0;
+        }
+         
+         if(dp[index][sum] != -1) {
+             return dp[index][sum];
+         }
+           
+         
+
+         dp[index][sum] = recursion(index, amount, coins, sum + coins[index]) + 
+         recursion(index + 1, amount, coins, sum);
+         
+          return dp[index][sum];
+         
+    }
+
+
+    public int change(int amount, int[] coins) {
+        return withLessMemory(amount, coins);
+        /*dp = new int[coins.length][amount + 1];
+         for (int[] row : dp)
+            Arrays.fill(row, -1);
+        return recursion(0, amount, coins, 0);*/
+    }
+}
